@@ -13,7 +13,7 @@ const takeAgain = document.getElementById('take-again');
 const takeAgainBtn = document.getElementById('take-again-btn');
 
 let currentQuestion = {};
-let acceptingAnswer = true;
+let acceptingAnswers = true;
 let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
@@ -61,6 +61,19 @@ let questions = [
   }
 ]
 
+let secondsLeft = 20;
+
+function setTimer() {
+  let timerInterval = setInterval(function() {
+    secondsLeft--;
+    countdown.textContent = secondsLeft;
+    if (secondsLeft <= 0) {
+      clearInterval(timerInterval);
+      showResults()
+    }
+  }, 1000);
+}
+
 startGame = () => {
   questionCounter = 0;
   score = 0;
@@ -71,7 +84,7 @@ startGame = () => {
 getNewQuestions = () => {
   if (availableQuestions.length === 0) {
     showResults();
-  } else {  
+  } else {
     questionCounter++;
     const questionIndex = Math.floor(Math.random() * availableQuestions.length);
     currentQuestion = availableQuestions[questionIndex];
@@ -85,6 +98,19 @@ getNewQuestions = () => {
   }
 }
 
+
+function resetBtns() {
+  for (i = 0; i < choices.length; i++) {
+    if (!choices[i].classList.contains('btn-light')) {
+      choices[i].classList.add('btn-light');
+    } else if (choices[i].classList.contains('btn-danger')) {
+      choices[i].classList.remove('btn-danger');
+    } else if (choices[i].classList.contains('btn-success')) {
+      choices[i].classList.remove('btn-success');
+    }
+  }
+}
+
 choices.forEach(choice => {
   choice.addEventListener('click', e => {
     if (!acceptingAnswers) return;
@@ -93,13 +119,27 @@ choices.forEach(choice => {
     const selectedAnswer = selectedChoice.dataset["number"];
     if (selectedAnswer == currentQuestion.answer) {
       score++;
+      selectedChoice.classList.remove("btn-light");
+      selectedChoice.classList.add("btn-success");
       secondsLeft += 5;
     } else {
+      selectedChoice.classList.remove("btn-light");
+      selectedChoice.classList.add("btn-danger");
       secondsLeft -= 5;
     }
-    getNewQuestions();
+    setTimeout( () => {
+      resetBtns()
+      getNewQuestions();
+    }, 500);
   })
 })
+
+function showResults(){
+  questionContainer.setAttribute('hidden', true);
+  timer.setAttribute('hidden', true);
+  showScore.innerHTML = score + '/5';
+  resultsContainer.removeAttribute('hidden');
+}
 
 startBtn.addEventListener('click', function() {
   startContainer.setAttribute('hidden', true);
@@ -109,27 +149,6 @@ startBtn.addEventListener('click', function() {
   setTimer();
   startGame();
 });
-
-let secondsLeft = 20;
-
-function setTimer() {
-  let timerInterval = setInterval(function() {
-    secondsLeft--;
-    countdown.textContent = secondsLeft;
-    if (secondsLeft === 0) {
-      clearInterval(timerInterval);
-      showResults()
-    }
-  }, 1000);
-}
-
-
-function showResults(){
-  questionContainer.setAttribute('hidden', true);
-  timer.setAttribute('hidden', true);
-  showScore.innerHTML = score + '/5';
-  resultsContainer.removeAttribute('hidden');
-}
 
 saveHighscoreBtn.addEventListener('click', function() {
 

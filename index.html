@@ -1,134 +1,117 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Hello, world!</title>
-  </head>
-  <body>
-    <!-- container for header -->
-    <header class="container mt-5">
-      <div class="float-left">
-        <button id="see-highscore-btn" type="button" class="btn" data-toggle="modal" data-target="#Modal">
-          See Highscores
-        </button>
-        <!-- Modal -->
-        <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-scrollable">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="ModalLabel">Highscores</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div id="highscore-list" class="modal-body">
-                show highscores here
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-              </div>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css"
+    integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
+
+  <title>Hello, world!</title>
+</head>
+
+<body>
+  <!-- container for header -->
+  <header class="container mt-5">
+    <div class="float-left">
+      <button id="see-highscore-btn" type="button" class="btn" data-toggle="modal" data-target="#Modal">
+        See Highscores
+      </button>
+      <!-- Modal -->
+      <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="ModalLabel">Highscores</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div id="highscore-list" class="modal-body">
+              show highscores here
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
       </div>
-      <div id="timer" class="row float-right mt-2 mr-3" hidden>
-        <p class="pr-1">Timer:</p>
-        <div id="countdown">20</div>
-      </div>
-    </header>
-
-    <!-- container for start -->
-    <div class="container" id="start-container">
-      <div class="jumbotron">
-        <h1>Code Quiz</h1>
-        <p>This quiz contains 5 questions. Press the button the start the quiz.</p>
-        <button id="start-btn" type="button" class="btn btn-light">Start</button>
-      </div>
     </div>
-
-    <!-- container for questions -->
-    <div class="container" id="question-container" hidden>
-      <div class="jumbotron">
-        <h1><div id="question">Question</div></h1>
-        <div id-="mc-btns" class="mc-btns">
-          <button class="btn btn-light btn-block choice-text" data-number="1" onclick="this.blur();">A</button>
-          <button class="btn btn-light btn-block choice-text" data-number="2" onclick="this.blur();">B</button>
-          <button class="btn btn-light btn-block choice-text" data-number="3" onclick="this.blur();">C</button>
-          <button class="btn btn-light btn-block choice-text" data-number="4" onclick="this.blur();">D</button>
-        </div>
-      </div>
+    <div id="timer" class="row float-right mt-2 mr-3" hidden>
+      <p class="pr-1">Timer:</p>
+      <div id="countdown">20</div>
     </div>
-    
-    <!-- container for results -->
-    <div class="container" id="results-container" hidden>
-      <div class="jumbotron">
-        <h1>Your Final Score:</h1>
-        <div class="text-center">
-          <div><h1 id="show-score">0/5</h1></div>
-          <div id="take-again" class="mb-3">
-            <button id="take-again-btn" type="button" class="btn btn-light mt-3">
-              Take the Quiz Again?
-            </button>
-          </div>
-          <hr>
-          <div id="form">
-            <form>
-              <p>Save your score!</p>
-              <input class="rounded text-center" type="text" name="user-initials" id="user-initials" placeholder="Enter your initials"/>
-              <br>
-              <button id="save-highscore-btn" type="button" class="btn btn-light mt-3">
-                Save
-              </button>
-            </form>
-          </div>
-        </div>
-        </div>
-    </div>
+  </header>
 
-    <!-- Optional JavaScript -->
-    <script src="script.js"></script>
-    
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
-  </body>
-</html>
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Code Quiz</title>
-  <link rel="stylesheet" href="Assets/style.css"/>
-</head>
-<body>
-  <nav class="topnav">
-    <a id="highscore" href="#">View Highscores</a>
-    <div id="timer">Timer</div>
-  </nav>
-  <div class="container">
-    <div id="mc" class="hide">
-      <div id="question">Question</div>
-      <div id-="mc-btns" class="mc-btns">
-        <button class="btn" id="a">A</button>
-        <button class="btn" id="b">B</button>
-        <button class="btn" id="c">C</button>
-        <button class="btn" id="d">D</button>
-      </div>
-    </div>
-    <div class="contols">
-      <button id="start-btn" class="start-btn btn">Start</button>
-      <button id="next-btn" class="next-btn btn hide">Next</button>
+  <!-- container for start -->
+  <div class="container" id="start-container">
+    <div class="jumbotron">
+      <h1>Code Quiz</h1>
+      <p>This quiz contains 5 questions. Press the button the start the quiz.</p>
+      <button id="start-btn" type="button" class="btn btn-light">Start</button>
     </div>
   </div>
+
+  <!-- container for questions -->
+  <div class="container" id="question-container" hidden>
+    <div class="jumbotron">
+      <h1>
+        <div id="question">Question</div>
+      </h1>
+      <div id-="mc-btns" class="mc-btns">
+        <button class="btn btn-light btn-block choice-text" data-number="1" onclick="this.blur();">A</button>
+        <button class="btn btn-light btn-block choice-text" data-number="2" onclick="this.blur();">B</button>
+        <button class="btn btn-light btn-block choice-text" data-number="3" onclick="this.blur();">C</button>
+        <button class="btn btn-light btn-block choice-text" data-number="4" onclick="this.blur();">D</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- container for results -->
+  <div class="container" id="results-container" hidden>
+    <div class="jumbotron">
+      <h1>Your Final Score:</h1>
+      <div class="text-center">
+        <div>
+          <h1 id="show-score">0/5</h1>
+        </div>
+        <div id="take-again" class="mb-3">
+          <button id="take-again-btn" type="button" class="btn btn-light mt-3">
+            Take the Quiz Again?
+          </button>
+        </div>
+        <hr>
+        <div id="form">
+          <form>
+            <p>Save your score!</p>
+            <input class="rounded text-center" type="text" name="user-initials" id="user-initials"
+              placeholder="Enter your initials" />
+            <br>
+            <button id="save-highscore-btn" type="button" class="btn btn-light mt-3">
+              Save
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Optional JavaScript -->
   <script src="script.js"></script>
+
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js"
+    integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J"
+    crossorigin="anonymous"></script>
 </body>
-</html> -->
+
+</html>
