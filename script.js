@@ -8,10 +8,13 @@ const countdown = document.getElementById('countdown');
 const resultsContainer = document.getElementById('results-container');
 const showScore = document.getElementById('show-score');
 const form = document.getElementById('form');
+const highscoreList = document.getElementById('highscore-list');
 const saveHighscoreBtn = document.getElementById('save-highscore-btn');
 const takeAgain = document.getElementById('take-again');
 const takeAgainBtn = document.getElementById('take-again-btn');
 
+let highscores = [];
+let userInitials = document.getElementById('user-initials');
 let currentQuestion = {};
 let acceptingAnswers = true;
 let score = 0;
@@ -98,6 +101,11 @@ getNewQuestions = () => {
   }
 }
 
+function disableBtns() {
+  for (i = 0; i < choices.length; i++) {
+    choices[i].disabled = true;
+  }
+}
 
 function resetBtns() {
   for (i = 0; i < choices.length; i++) {
@@ -108,6 +116,7 @@ function resetBtns() {
     } else if (choices[i].classList.contains('btn-success')) {
       choices[i].classList.remove('btn-success');
     }
+    choices[i].disabled = false;
   }
 }
 
@@ -127,6 +136,7 @@ choices.forEach(choice => {
       selectedChoice.classList.add("btn-danger");
       secondsLeft -= 5;
     }
+    disableBtns();
     setTimeout( () => {
       resetBtns()
       getNewQuestions();
@@ -148,10 +158,6 @@ startBtn.addEventListener('click', function() {
   countdown.textContent = 20;
   setTimer();
   startGame();
-});
-
-saveHighscoreBtn.addEventListener('click', function() {
-
 });
 
 takeAgainBtn.addEventListener('click', function() {
