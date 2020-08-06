@@ -15,7 +15,7 @@
 
 <body>
   <!-- container for header -->
-  <header class="container mt-5">
+  <header class="container mt-2">
     <div class="float-left">
       <button id="see-highscore-btn" type="button" class="btn" data-toggle="modal" data-target="#Modal">
         See Your Highscores
@@ -46,31 +46,31 @@
   </header>
 
   <!-- container for start -->
-  <div class="container" id="start-container">
+  <div class="container pt-5" id="start-container">
     <div class="jumbotron">
       <h1>Code Quiz</h1>
-      <p>This quiz contains 5 questions. Press the button the start the quiz.</p>
-      <button id="start-btn" type="button" class="btn btn-light">Start</button>
+      <p>This quiz contains 5 questions with 20 seconds on the timer.<br><br>For every question you get right, 5 seconds will be added to the timer.<br>For every question you get wrong, 5 seconds will be subtracted from the timer.</p>
+      <button id="start-btn" type="button" class="btn btn-warning">Start</button>
     </div>
   </div>
 
   <!-- container for questions -->
-  <div class="container" id="question-container" hidden>
+  <div class="container pt-5" id="question-container" hidden>
     <div class="jumbotron">
       <h1>
         <div id="question">Question</div>
       </h1>
-      <div id-="mc-btns" class="mc-btns">
-        <button class="btn btn-light btn-block choice-text" data-number="1" onclick="this.blur();">A</button>
-        <button class="btn btn-light btn-block choice-text" data-number="2" onclick="this.blur();">B</button>
-        <button class="btn btn-light btn-block choice-text" data-number="3" onclick="this.blur();">C</button>
-        <button class="btn btn-light btn-block choice-text" data-number="4" onclick="this.blur();">D</button>
-      </div>
+      <button class="btn btn-light btn-block choice-text" data-number="1" onclick="this.blur();">A</button>
+      <button class="btn btn-light btn-block choice-text" data-number="2" onclick="this.blur();">B</button>
+      <button class="btn btn-light btn-block choice-text" data-number="3" onclick="this.blur();">C</button>
+      <button class="btn btn-light btn-block choice-text" data-number="4" onclick="this.blur();">D</button>
+      <hr>
+      <p id="question-number"></p>
     </div>
   </div>
 
   <!-- container for results -->
-  <div class="container" id="results-container" hidden>
+  <div class="container pt-5" id="results-container" hidden>
     <div class="jumbotron">
       <h1>Your Final Score:</h1>
       <div class="text-center">
@@ -78,12 +78,12 @@
           <h1 id="show-score">0/5</h1>
         </div>
         <div id="take-again" class="mb-3">
-          <button id="take-again-btn" type="button" class="btn btn-light mt-3">
-            Take the Quiz Again?
+          <button id="take-again-btn" type="button" class="btn btn-warning mt-3">
+            Take the quiz again?
           </button>
         </div>
-        <hr>
         <div id="form">
+          <hr>
           <form>
             <p>Save your score!</p>
             <input class="rounded text-center" type="text" name="user-initials" id="user-initials"

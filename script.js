@@ -13,55 +13,55 @@ const seeHighscoreBtn = document.getElementById('see-highscore-btn');
 const saveHighscoreBtn = document.getElementById('save-highscore-btn');
 const takeAgain = document.getElementById('take-again');
 const takeAgainBtn = document.getElementById('take-again-btn');
+const questionNumber = document.getElementById('question-number');
 
 let highscores = [];
 let userInitials = document.getElementById('user-initials');
 let currentQuestion = {};
-let acceptingAnswers = true;
 let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
 
 let questions = [
   {
-    question: "click a",
-    choice1: "a",
-    choice2: "b",
-    choice3: "c",
-    choice4: "d",
-    answer: 1
-  },
-  {
-    question: "click b",
-    choice1: "a",
-    choice2: "b",
-    choice3: "c",
-    choice4: "d",
+    question: "Which of the following is not an option for specifying a color in CSS3?",
+    choice1: "hexadecimal",
+    choice2: "binary",
+    choice3: "rgba",
+    choice4: "color name",
     answer: 2
   },
   {
-    question: "click c",
-    choice1: "a",
-    choice2: "b",
-    choice3: "c",
-    choice4: "d",
+    question: "The default display value for <a> element is:",
+    choice1: "inline",
+    choice2: "inline-block",
+    choice3: "block",
+    choice4: "none",
+    answer: 1
+  },
+  {
+    question: "What is the correct HTML for referring to an external style sheet?",
+    choice1: '<link rel="css" href="mystyle.css">',
+    choice2: '<link rel="stylesheet" href="mystyle.css">',
+    choice3: '<link rel="stylesheet" src="mystyle.css">',
+    choice4: '<style src="mystyle.css"></style>',
+    answer: 2
+  },
+  {
+    question: "What does <thead> stand for?",
+    choice1: "The head",
+    choice2: "Table head",
+    choice3: "Table header",
+    choice4: "None of the above",
     answer: 3
   },
   {
-    question: "click d",
-    choice1: "a",
-    choice2: "b",
-    choice3: "c",
-    choice4: "d",
-    answer: 4
-  },
-  {
-    question: "click a",
-    choice1: "a",
-    choice2: "b",
-    choice3: "c",
-    choice4: "d",
-    answer: 1
+    question: "When a function returns a node from the DOM, it is of type",
+    choice1: "Number",
+    choice2: "Object",
+    choice3: "String",
+    choice4: "Boolean",
+    answer: 2
   }
 ]
 
@@ -82,14 +82,15 @@ startGame = () => {
   questionCounter = 0;
   score = 0;
   availableQuestions = [...questions];
-  getNewQuestions();
+  getNewQuestion();
 }
 
-getNewQuestions = () => {
+getNewQuestion = () => {
   if (availableQuestions.length === 0) {
     showResults();
   } else {
     questionCounter++;
+    questionNumber.innerHTML = "Question " + questionCounter + " out of 5";
     const questionIndex = Math.floor(Math.random() * availableQuestions.length);
     currentQuestion = availableQuestions[questionIndex];
     question.innerText = currentQuestion.question;
@@ -98,7 +99,6 @@ getNewQuestions = () => {
       choice.innerText = currentQuestion['choice' + number];
     })
     availableQuestions.splice(questionIndex, 1);
-    acceptingAnswers = true;
   }
 }
 
@@ -123,8 +123,6 @@ function resetBtns() {
 
 choices.forEach(choice => {
   choice.addEventListener('click', e => {
-    if (!acceptingAnswers) return;
-    acceptingAnswers = false;
     const selectedChoice = e.target;
     const selectedAnswer = selectedChoice.dataset["number"];
     if (selectedAnswer == currentQuestion.answer) {
@@ -140,12 +138,15 @@ choices.forEach(choice => {
     disableBtns();
     setTimeout( () => {
       resetBtns()
-      getNewQuestions();
+      getNewQuestion();
     }, 500);
   })
 })
 
 function showResults(){
+  if (form.hasAttribute('hidden')) {
+    form.removeAttribute('hidden');
+  }
   questionContainer.setAttribute('hidden', true);
   timer.setAttribute('hidden', true);
   showScore.innerHTML = score + '/5';
@@ -153,32 +154,35 @@ function showResults(){
 }
 
 function renderHighscores() {
-  const savedHighscores = JSON.parse(localStorage.getItem("highscores"));
-  highscores.push(...savedHighscores);
-  for (var i = 0; i < highscores.length; i++) {
-    const p = document.createElement("p");
-    p.textContent = highscores[i];
-    highscoreList.appendChild(p);
+  if (highscores === []) {
+    return;
+  } else {
+    const savedHighscores = JSON.parse(localStorage.getItem("highscores"));
+    highscores.push(...savedHighscores);
+    for (var i = 0; i < highscores.length; i++) {
+      const p = document.createElement("p");
+      p.textContent = highscores[i];
+      highscoreList.appendChild(p);
+    }
   }
 }
+
+renderHighscores();
 
 function storeHighscore(array) {
   localStorage.setItem("highscores", JSON.stringify(array));
 }
 
 saveHighscoreBtn.addEventListener('click', function(event) {
-  let userHighscore = userInitials.value;
-  highscores.push(score + ' - ' + userHighscore);
+  highscores.push(score + ' - ' + userInitials.value);
   const p = document.createElement("p");
-  p.textContent = score + ' - ' + userHighscore;
+  p.textContent = score + ' - ' + userInitials.value;
   highscoreList.appendChild(p);
   userInitials.value = "";
   storeHighscore(highscores);
   seeHighscoreBtn.click();
   form.setAttribute('hidden', true);
 });
-
-renderHighscores();
 
 startBtn.addEventListener('click', function() {
   startContainer.setAttribute('hidden', true);
