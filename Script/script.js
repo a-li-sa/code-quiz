@@ -1,3 +1,4 @@
+//HTML elements
 const startBtn = document.getElementById('start-btn');
 const startContainer = document.getElementById('start-container');
 const questionContainer = document.getElementById('question-container');
@@ -15,14 +16,15 @@ const takeAgain = document.getElementById('take-again');
 const takeAgainBtn = document.getElementById('take-again-btn');
 const questionNumber = document.getElementById('question-number');
 const clearBtn = document.getElementById('clear-btn');
-
+const userInitials = document.getElementById('user-initials');
+// declare variables
 let highscores = [];
-let userInitials = document.getElementById('user-initials');
 let currentQuestion = {};
 let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
-
+let secondsLeft = 20;
+//15 questions
 let questions = [
   {
     question: "Which of the following is not an option for specifying a color in CSS3?",
@@ -145,9 +147,25 @@ let questions = [
     answer: 1
   }
 ]
-
-let secondsLeft = 20;
-
+/*********** START CONTAINER METHODS ***********/ 
+//when the start button is clicked, hide the start containeer and start the timer
+startBtn.addEventListener('click', function() {
+  startContainer.setAttribute('hidden', true);
+  questionContainer.removeAttribute('hidden');
+  timer.removeAttribute('hidden');
+  countdown.textContent = 20;
+  setTimer();
+  startGame();
+});
+//when the game starts, the questionCounter and score reset, and the questions are reloaded
+function startGame() {
+  questionCounter = 0;
+  score = 0;
+  availableQuestions = [...questions];
+  getNewQuestion();
+}
+/*********** QUESTION CONTAINER METHODS ***********/ 
+//timer terminates when the timer hits 0 or when user finishes all of the questions
 function setTimer() {
   let timerInterval = setInterval(function() {
     secondsLeft--;
@@ -158,38 +176,37 @@ function setTimer() {
     }
   }, 1000);
 }
-
-function startGame() {
-  questionCounter = 0;
-  score = 0;
-  availableQuestions = [...questions];
-  getNewQuestion();
-}
-
-function getNewQuestion() {
-  if (availableQuestions.length === 0) {
-    questionCounter++
-    showResults();
-  } else {
-    questionCounter++;
-    questionNumber.innerHTML = "Question " + questionCounter + " out of " + questions.length;
-    const questionIndex = Math.floor(Math.random() * availableQuestions.length);
-    currentQuestion = availableQuestions[questionIndex];
-    question.innerText = currentQuestion.question;
-    choices.forEach( choice => {
-      const number = choice.dataset['number'];
-      choice.innerText = currentQuestion['choice' + number];
-    })
-    availableQuestions.splice(questionIndex, 1);
-  }
-}
-
+//when a choice gets clicked
+choices.forEach(choice => {
+  choice.addEventListener('click', e => {
+    const selectedChoice = e.target;
+    const selectedAnswer = selectedChoice.dataset["number"];
+    if (selectedAnswer == currentQuestion.answer) {
+      //if it is the correct choice
+      selectedChoice.setAttribute("class", "btn btn-block choice-text btn-success");
+      score++;
+      // 5 + 1 to offset the timeout
+      secondsLeft += 6;
+    } else {
+      //if it is the wrong choice
+      selectedChoice.setAttribute("class", "btn btn-block choice-text btn-danger");
+      // 5 - 1 to offset the timeout
+      secondsLeft -= 4;
+    }
+    disableBtns();
+    setTimeout( () => {
+      resetBtns()
+      getNewQuestion();
+    }, 1000);
+  })
+})
+//disable the buttons for when the quiz shows the correct/wrong answer
 function disableBtns() {
   for (i = 0; i < choices.length; i++) {
     choices[i].disabled = true;
   }
 }
-
+//changes the buttons back the to default colors
 function resetBtns() {
   for (i = 0; i < choices.length; i++) {
     if (!choices[i].classList.contains('btn-light')) {
@@ -202,38 +219,43 @@ function resetBtns() {
     choices[i].disabled = false;
   }
 }
-
-choices.forEach(choice => {
-  choice.addEventListener('click', e => {
-    const selectedChoice = e.target;
-    const selectedAnswer = selectedChoice.dataset["number"];
-    if (selectedAnswer == currentQuestion.answer) {
-      console.log(selectedAnswer, currentQuestion.answer);
-      selectedChoice.setAttribute("class", "btn btn-block choice-text btn-success");
-      score++;
-      // 5 + 1 to offset the timeout
-      secondsLeft += 6;
-    } else {
-      console.log(selectedAnswer, currentQuestion.answer);
-      selectedChoice.setAttribute("class", "btn btn-block choice-text btn-danger");
-      // 5 - 1 to offset the timeout
-      secondsLeft -= 4;
-    }
-    disableBtns();
-    setTimeout( () => {
-      resetBtns()
-      getNewQuestion();
-    }, 1000);
-  })
-})
-
+//renders a question and stops the quiz when there are no more questions
+function getNewQuestion() {
+  if (availableQuestions.length === 0) {
+    //the user wil be directed to the results page when questions run out
+    questionCounter++
+    showResults();
+  } else {
+    //a random question from the available questions array will be displayed, and questions will not repeat
+    questionCounter++;
+    questionNumber.innerHTML = "Question " + questionCounter + " out of " + questions.length;
+    const questionIndex = Math.floor(Math.random() * availableQuestions.length);
+    currentQuestion = availableQuestions[questionIndex];
+    question.innerText = currentQuestion.question;
+    choices.forEach( choice => {
+      choice.innerText = currentQuestion['choice' + choice.dataset['number']];
+    })
+    availableQuestions.splice(questionIndex, 1);
+  }
+}
+//this gets called when the quiz is over, it hides the questionContainer, unhides the resultsContainer and shows the final score
 function showResults(){
   questionContainer.setAttribute('hidden', true);
   timer.setAttribute('hidden', true);
   showScore.innerHTML = score + '/' + questions.length;
   resultsContainer.removeAttribute('hidden');
 }
-
+/*********** HIGHSCORE MODAL METHODS ***********/ 
+//call the function when the page is loaded
+renderHighscores();
+//when the clear button is clicked, the highscores array resets
+clearBtn.addEventListener('click', function () {
+  highscores.length = 0;
+  renderHighscores();
+  storeHighscore(highscores);
+  highscoreList.textContent = "";
+})
+//loads the savedHighscores from the localStorage and appends it to the modal
 function renderHighscores() {
   if (localStorage.getItem("highscores")) {
     const savedHighscores = JSON.parse(localStorage.getItem("highscores"));
@@ -245,24 +267,12 @@ function renderHighscores() {
     }
   }
 }
-
-renderHighscores();
-
+// this will be called whenever the user changes the localstorage
 function storeHighscore(array) {
   localStorage.setItem("highscores", JSON.stringify(array));
 }
-
-function clearScores() {
-  highscores.length = 0;
-  storeHighscore(highscores);
-  renderHighscores();
-  highscoreList.textContent = "";
-}
-
-clearBtn.addEventListener('click', function () {
-  clearScores();
-})
-
+/*********** RESULTS CONTAINER METHODS ***********/ 
+//when the save highscore btn is clicked, this adds a new item to the highscores array and appends the new item to the model 
 saveHighscoreBtn.addEventListener('click', function(event) {
   highscores.push(score + '/' + questions.length + ' - ' + userInitials.value);
   const p = document.createElement("p");
@@ -271,18 +281,10 @@ saveHighscoreBtn.addEventListener('click', function(event) {
   userInitials.value = "";
   storeHighscore(highscores);
   seeHighscoreBtn.click();
+  //user can only use the save form once per quiz
   form.setAttribute('hidden', true);
 });
-
-startBtn.addEventListener('click', function() {
-  startContainer.setAttribute('hidden', true);
-  questionContainer.removeAttribute('hidden');
-  timer.removeAttribute('hidden');
-  countdown.textContent = 20;
-  setTimer();
-  startGame();
-});
-
+//redirects the user to the start container and unhides the save highscore form
 takeAgainBtn.addEventListener('click', function() {
   resultsContainer.setAttribute('hidden', true);
   secondsLeft = 20;
