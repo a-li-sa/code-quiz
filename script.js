@@ -133,17 +133,19 @@ choices.forEach(choice => {
       score++;
       selectedChoice.classList.remove("btn-light");
       selectedChoice.classList.add("btn-success");
-      secondsLeft += 5;
+      // 5 + 1 to offset the timeout
+      secondsLeft += 6;
     } else {
       selectedChoice.classList.remove("btn-light");
       selectedChoice.classList.add("btn-danger");
-      secondsLeft -= 5;
+      // 5 - 1 to offset the timeout
+      secondsLeft -= 4;
     }
     disableBtns();
     setTimeout( () => {
       resetBtns()
       getNewQuestion();
-    }, 500);
+    }, 1000);
   })
 })
 
@@ -183,12 +185,8 @@ clearBtn.addEventListener('click', function () {
   clearScores();
 })
 
-function sortHighscores() {
-  highscores
-}
-
 saveHighscoreBtn.addEventListener('click', function(event) {
-  highscores.push(score + ' - ' + userInitials.value);
+  highscores.push(score + '/5 - ' + userInitials.value);
   const p = document.createElement("p");
   p.textContent = score + '/5 - ' + userInitials.value;
   highscoreList.appendChild(p);
