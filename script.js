@@ -63,6 +63,86 @@ let questions = [
     choice3: "String",
     choice4: "Boolean",
     answer: 2
+  },
+  {
+    question: 'Which is the correct syntax to change the contents of this HTML element? <p id = "quiz">This is a quiz. </p>',
+    choice1: 'document.getElementById("quiz").innerHTML ="New content!!";',
+    choice2: '#quiz.innerHTML="New content!!";',
+    choice3: 'document.getElementsByTagName("p").innerHTML ="New content!!";',
+    choice4: 'quiz.innerHTML="New content!";',
+    answer: 1
+  },
+  {
+    question: "Which attribute is used to link to an external JavaScript file?",
+    choice1: 'href; e.g., href = "extFile.js"',
+    choice2: 'src; e.g., src = "extFile.js"',
+    choice3: 'file; e.g., file = "extFile.js"',
+    choice4: 'script; e.g., script = "extFile.js"',
+    answer: 2
+  },
+  {
+    question: 'How do you properly access the first element in an array variable named "fruit"?',
+    choice1: "fruit[0]",
+    choice2: "fruit[1]",
+    choice3: "[fruit]0",
+    choice4: "fruit_0",
+    answer: 1
+  },
+  {
+    question: "Which word is used to define a function in JavaScript?",
+    choice1: "func",
+    choice2: "function",
+    choice3: "script",
+    choice4: "define",
+    answer: 2
+  },
+  {
+    question: "The Domain Name Service looks up the domain and returns the",
+    choice1: "IP address",
+    choice2: "server",
+    choice3: "host",
+    choice4: "document",
+    answer: 1
+  },
+  {
+    question: "Which is the correct file extension for a web page?",
+    choice1: ".ppt",
+    choice2: ".doc",
+    choice3: ".html",
+    choice4: ".txt",
+    answer: 3
+  },
+  {
+    question: 'When should an image have null (empty) alt text (alt - "")?',
+    choice1: "When the image is black and white",
+    choice2: "When the image is complex",
+    choice3: "When the image is decorative",
+    choice4: "When the image already displays descriptive text",
+    answer: 3
+  },
+  {
+    question: "Which of the following is the best way to convey that your text has special meaning?",
+    choice1: "Using a larger font size to signify the important text",
+    choice2: "Using colors to signify the important text",
+    choice3: "Using a combination of font size and color to signify the important text",
+    choice4: "Using semantic tags in addition to color and/or font.",
+    answer: 4
+  },
+  {
+    question: "Which version of HTML introduced semantic tags?",
+    choice1: "HTML 4.0.1",
+    choice2: "HTML 5",
+    choice3: "HTML 2.0",
+    choice4: "HTML 3.2",
+    answer: 2
+  },
+  {
+    question: "Every well-formed HTML document should include:",
+    choice1: "doctype, head, body",
+    choice2: "doctype, header, body",
+    choice3: "header, nav, footer",
+    choice4: "alt text",
+    answer: 1
   }
 ]
 
@@ -77,9 +157,6 @@ function setTimer() {
       showResults()
     }
   }, 1000);
-  if (availableQuestions.length === 0) {
-    return;
-  }
 }
 
 startGame = () => {
@@ -94,7 +171,7 @@ getNewQuestion = () => {
     showResults();
   } else {
     questionCounter++;
-    questionNumber.innerHTML = "Question " + questionCounter + " out of 5";
+    questionNumber.innerHTML = "Question " + questionCounter + " out of " + questions.length;
     const questionIndex = Math.floor(Math.random() * availableQuestions.length);
     currentQuestion = availableQuestions[questionIndex];
     question.innerText = currentQuestion.question;
@@ -152,7 +229,7 @@ choices.forEach(choice => {
 function showResults(){
   questionContainer.setAttribute('hidden', true);
   timer.setAttribute('hidden', true);
-  showScore.innerHTML = score + '/5';
+  showScore.innerHTML = score + '/' + questions.length;
   resultsContainer.removeAttribute('hidden');
 }
 
@@ -186,9 +263,9 @@ clearBtn.addEventListener('click', function () {
 })
 
 saveHighscoreBtn.addEventListener('click', function(event) {
-  highscores.push(score + '/5 - ' + userInitials.value);
+  highscores.push(score + '/' + questions.length + ' - ' + userInitials.value);
   const p = document.createElement("p");
-  p.textContent = score + '/5 - ' + userInitials.value;
+  p.textContent = score + '/' + questions.length + ' - ' + userInitials.value;
   highscoreList.appendChild(p);
   userInitials.value = "";
   storeHighscore(highscores);
@@ -206,10 +283,10 @@ startBtn.addEventListener('click', function() {
 });
 
 takeAgainBtn.addEventListener('click', function() {
+  resultsContainer.setAttribute('hidden', true);
   secondsLeft = 20;
   if (form.hasAttribute('hidden')) {
     form.removeAttribute('hidden');
   }
-  resultsContainer.setAttribute('hidden', true);
   startContainer.removeAttribute('hidden');
 })
