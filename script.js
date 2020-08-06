@@ -77,6 +77,9 @@ function setTimer() {
       showResults()
     }
   }, 1000);
+  if (availableQuestions.length === 0) {
+    return;
+  }
 }
 
 startGame = () => {
@@ -205,10 +208,10 @@ startBtn.addEventListener('click', function() {
 });
 
 takeAgainBtn.addEventListener('click', function() {
+  secondsLeft = 20;
   if (form.hasAttribute('hidden')) {
     form.removeAttribute('hidden');
   }
   resultsContainer.setAttribute('hidden', true);
   startContainer.removeAttribute('hidden');
-  secondsLeft = 20;
 })
