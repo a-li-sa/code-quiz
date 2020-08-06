@@ -152,22 +152,23 @@ function setTimer() {
   let timerInterval = setInterval(function() {
     secondsLeft--;
     countdown.textContent = secondsLeft;
-    if (secondsLeft <= 0) {
+    if (secondsLeft <= 0 || questionCounter > 15) {
       clearInterval(timerInterval);
       showResults()
     }
   }, 1000);
 }
 
-startGame = () => {
+function startGame() {
   questionCounter = 0;
   score = 0;
   availableQuestions = [...questions];
   getNewQuestion();
 }
 
-getNewQuestion = () => {
+function getNewQuestion() {
   if (availableQuestions.length === 0) {
+    questionCounter++
     showResults();
   } else {
     questionCounter++;

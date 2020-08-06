@@ -49,18 +49,26 @@
   <!-- container for start -->
   <div class="container pt-5" id="start-container">
     <div class="jumbotron">
-      <h1>Code Quiz</h1>
-      <p>This quiz contains 15 questions with 20 seconds on the timer.<br><br>For every question you get right, 5 seconds will be added to the timer.<br>For every question you get wrong, 5 seconds will be subtracted from the timer.</p>
-      <button id="start-btn" type="button" class="btn btn-warning">Start</button>
+      <div class="text-center">
+        <h1>Code Quiz</h1>
+        <p>This quiz contains 15 questions starting with 20 seconds on the timer.</p>
+        <button id="start-btn" type="button" class="btn btn-warning">Start</button>
+      </div>
+      <hr>
+      <h3>Rules:</h3>
+      <ul>
+        <li>For every question you get right, 5 seconds will be added to the timer.</li>
+        <li>For every question you get wrong, 5 seconds will be subtracted from the timer.</li>
+      </ul>
     </div>
   </div>
 
   <!-- container for questions -->
   <div class="container pt-5" id="question-container" hidden>
     <div class="jumbotron">
-      <h1>
+      <h2>
         <div id="question">Question</div>
-      </h1>
+      </h2>
       <button class="btn btn-light btn-block choice-text" data-number="1" onclick="this.blur();">A</button>
       <button class="btn btn-light btn-block choice-text" data-number="2" onclick="this.blur();">B</button>
       <button class="btn btn-light btn-block choice-text" data-number="3" onclick="this.blur();">C</button>
