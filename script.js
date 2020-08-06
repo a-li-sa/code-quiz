@@ -208,14 +208,16 @@ choices.forEach(choice => {
     const selectedChoice = e.target;
     const selectedAnswer = selectedChoice.dataset["number"];
     if (selectedAnswer == currentQuestion.answer) {
-      score++;
+      console.log(selectedAnswer, currentQuestion.answer);
+      selectedChoice.setAttribute("class", "btn btn-block choice-text btn-success");
       selectedChoice.classList.remove("btn-light");
-      selectedChoice.classList.add("btn-success");
+      score++;
       // 5 + 1 to offset the timeout
       secondsLeft += 6;
     } else {
+      console.log(selectedAnswer, currentQuestion.answer);
+      selectedChoice.setAttribute("class", "btn btn-block choice-text btn-danger");
       selectedChoice.classList.remove("btn-light");
-      selectedChoice.classList.add("btn-danger");
       // 5 - 1 to offset the timeout
       secondsLeft -= 4;
     }
