@@ -10,20 +10,20 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css"
     integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
 
-  <title>Hello, world!</title>
+  <title>Code Quiz</title>
 </head>
 
-<body>
+<body class="bg-dark">
   <!-- container for header -->
   <header class="container mt-2">
     <div class="float-left">
-      <button id="see-highscore-btn" type="button" class="btn" data-toggle="modal" data-target="#Modal">
+      <button id="see-highscore-btn" type="button" class="btn btn-dark" data-toggle="modal" data-target="#Modal">
         View Your Previous Scores
       </button>
       <!-- Modal -->
       <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
-          <div class="modal-content">
+          <div class="modal-content alert-dark">
             <div class="modal-header">
               <h5 class="modal-title" id="ModalLabel">Your Scores</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -34,13 +34,13 @@
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-light" id="clear-btn" onclick="this.blur();">Clear Scores</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal">Go Back</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Go Back</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div id="timer" class="row float-right mt-2 mr-3" hidden>
+    <div id="timer" class="text-white row float-right mt-2 mr-3" hidden>
       <p class="pr-1">Timer:</p>
       <div id="countdown">20</div>
     </div>
@@ -48,11 +48,11 @@
 
   <!-- container for start -->
   <div class="container pt-5" id="start-container">
-    <div class="jumbotron">
+    <div class="jumbotron alert-dark">
       <div class="text-center">
         <h1>Code Quiz</h1>
-        <p>This quiz contains 15 questions starting with 20 seconds on the timer.</p>
-        <button id="start-btn" type="button" class="btn btn-warning">Start</button>
+        <p>This quiz contains 15 questions and starts with 20 seconds on the timer.</p>
+        <button id="start-btn" type="button" class="btn btn-secondary">Start</button>
       </div>
       <hr>
       <h3>Rules:</h3>
@@ -65,7 +65,7 @@
 
   <!-- container for questions -->
   <div class="container pt-5" id="question-container" hidden>
-    <div class="jumbotron">
+    <div class="jumbotron alert-dark">
       <h2>
         <div id="question">Question</div>
       </h2>
@@ -80,14 +80,14 @@
 
   <!-- container for results -->
   <div class="container pt-5" id="results-container" hidden>
-    <div class="jumbotron">
+    <div class="jumbotron alert-dark">
       <h1>Your Final Score:</h1>
       <div class="text-center">
         <div>
           <h1 id="show-score">0/5</h1>
         </div>
         <div id="take-again" class="mb-3">
-          <button id="take-again-btn" type="button" class="btn btn-warning mt-3">
+          <button id="take-again-btn" type="button" class="btn btn-secondary mt-3">
             Take the quiz again?
           </button>
         </div>
