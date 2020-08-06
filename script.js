@@ -9,6 +9,7 @@ const resultsContainer = document.getElementById('results-container');
 const showScore = document.getElementById('show-score');
 const form = document.getElementById('form');
 const highscoreList = document.getElementById('highscore-list');
+const seeHighscoreBtn = document.getElementById('see-highscore-btn');
 const saveHighscoreBtn = document.getElementById('save-highscore-btn');
 const takeAgain = document.getElementById('take-again');
 const takeAgainBtn = document.getElementById('take-again-btn');
@@ -150,6 +151,34 @@ function showResults(){
   showScore.innerHTML = score + '/5';
   resultsContainer.removeAttribute('hidden');
 }
+
+function renderHighscores() {
+  const savedHighscores = JSON.parse(localStorage.getItem("highscores"));
+  highscores.push(...savedHighscores);
+  for (var i = 0; i < highscores.length; i++) {
+    const p = document.createElement("p");
+    p.textContent = highscores[i];
+    highscoreList.appendChild(p);
+  }
+}
+
+function storeHighscore(array) {
+  localStorage.setItem("highscores", JSON.stringify(array));
+}
+
+saveHighscoreBtn.addEventListener('click', function(event) {
+  let userHighscore = userInitials.value;
+  highscores.push(score + ' - ' + userHighscore);
+  const p = document.createElement("p");
+  p.textContent = score + ' - ' + userHighscore;
+  highscoreList.appendChild(p);
+  userInitials.value = "";
+  storeHighscore(highscores);
+  seeHighscoreBtn.click();
+  form.setAttribute('hidden', true);
+});
+
+renderHighscores();
 
 startBtn.addEventListener('click', function() {
   startContainer.setAttribute('hidden', true);
