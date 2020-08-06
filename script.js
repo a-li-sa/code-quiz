@@ -14,6 +14,7 @@ const saveHighscoreBtn = document.getElementById('save-highscore-btn');
 const takeAgain = document.getElementById('take-again');
 const takeAgainBtn = document.getElementById('take-again-btn');
 const questionNumber = document.getElementById('question-number');
+const clearBtn = document.getElementById('clear-btn');
 
 let highscores = [];
 let userInitials = document.getElementById('user-initials');
@@ -144,9 +145,6 @@ choices.forEach(choice => {
 })
 
 function showResults(){
-  if (form.hasAttribute('hidden')) {
-    form.removeAttribute('hidden');
-  }
   questionContainer.setAttribute('hidden', true);
   timer.setAttribute('hidden', true);
   showScore.innerHTML = score + '/5';
@@ -171,6 +169,21 @@ function storeHighscore(array) {
   localStorage.setItem("highscores", JSON.stringify(array));
 }
 
+function clearScores() {
+  highscores.length = 0;
+  storeHighscore(highscores);
+  renderHighscores();
+  highscoreList.textContent = "";
+}
+
+clearBtn.addEventListener('click', function () {
+  clearScores();
+})
+
+function sortHighscores() {
+  highscores
+}
+
 saveHighscoreBtn.addEventListener('click', function(event) {
   highscores.push(score + ' - ' + userInitials.value);
   const p = document.createElement("p");
@@ -192,6 +205,9 @@ startBtn.addEventListener('click', function() {
 });
 
 takeAgainBtn.addEventListener('click', function() {
+  if (form.hasAttribute('hidden')) {
+    form.removeAttribute('hidden');
+  }
   resultsContainer.setAttribute('hidden', true);
   startContainer.removeAttribute('hidden');
   secondsLeft = 20;
