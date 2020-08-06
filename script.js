@@ -144,6 +144,9 @@ choices.forEach(choice => {
 })
 
 function showResults(){
+  if (form.hasAttribute('hidden')) {
+    form.removeAttribute('hidden');
+  }
   questionContainer.setAttribute('hidden', true);
   timer.setAttribute('hidden', true);
   showScore.innerHTML = score + '/5';
@@ -151,9 +154,7 @@ function showResults(){
 }
 
 function renderHighscores() {
-  if (highscores === []) {
-    return;
-  } else {
+  if (localStorage.getItem("highscores")) {
     const savedHighscores = JSON.parse(localStorage.getItem("highscores"));
     highscores.push(...savedHighscores);
     for (var i = 0; i < highscores.length; i++) {
@@ -191,9 +192,6 @@ startBtn.addEventListener('click', function() {
 });
 
 takeAgainBtn.addEventListener('click', function() {
-  if (form.hasAttribute('hidden')) {
-    form.removeAttribute('hidden');
-  }
   resultsContainer.setAttribute('hidden', true);
   startContainer.removeAttribute('hidden');
   secondsLeft = 20;
