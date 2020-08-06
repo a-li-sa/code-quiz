@@ -190,7 +190,7 @@ function sortHighscores() {
 saveHighscoreBtn.addEventListener('click', function(event) {
   highscores.push(score + ' - ' + userInitials.value);
   const p = document.createElement("p");
-  p.textContent = score + ' - ' + userInitials.value;
+  p.textContent = score + '/5 - ' + userInitials.value;
   highscoreList.appendChild(p);
   userInitials.value = "";
   storeHighscore(highscores);
