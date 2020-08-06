@@ -144,9 +144,6 @@ choices.forEach(choice => {
 })
 
 function showResults(){
-  if (form.hasAttribute('hidden')) {
-    form.removeAttribute('hidden');
-  }
   questionContainer.setAttribute('hidden', true);
   timer.setAttribute('hidden', true);
   showScore.innerHTML = score + '/5';
@@ -194,6 +191,9 @@ startBtn.addEventListener('click', function() {
 });
 
 takeAgainBtn.addEventListener('click', function() {
+  if (form.hasAttribute('hidden')) {
+    form.removeAttribute('hidden');
+  }
   resultsContainer.setAttribute('hidden', true);
   startContainer.removeAttribute('hidden');
   secondsLeft = 20;
