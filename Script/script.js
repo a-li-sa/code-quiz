@@ -210,14 +210,12 @@ choices.forEach(choice => {
     if (selectedAnswer == currentQuestion.answer) {
       console.log(selectedAnswer, currentQuestion.answer);
       selectedChoice.setAttribute("class", "btn btn-block choice-text btn-success");
-      selectedChoice.classList.remove("btn-light");
       score++;
       // 5 + 1 to offset the timeout
       secondsLeft += 6;
     } else {
       console.log(selectedAnswer, currentQuestion.answer);
       selectedChoice.setAttribute("class", "btn btn-block choice-text btn-danger");
-      selectedChoice.classList.remove("btn-light");
       // 5 - 1 to offset the timeout
       secondsLeft -= 4;
     }
