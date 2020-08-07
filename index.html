@@ -86,22 +86,28 @@
         <div>
           <h1 id="show-score">0/5</h1>
         </div>
+        <div id="form">
+          <hr>
+          <form>
+            <h3 class="text-center">
+              Save your score?
+            </h3>
+            <div class="form-row justify-content-center">
+              <div class="col-6 my-1">
+                <input class="col form-control" type="text" name="user-initials" id="user-initials"
+                placeholder="Enter your initials" />
+              </div>
+              <div class="col-auto my-1">
+                <button id="save-highscore-btn" type="button" class="btn btn-secondary">Save</button>
+              </div>
+            </div>
+          </form>
+          <hr>
+        </div>
         <div id="take-again" class="mb-3">
           <button id="take-again-btn" type="button" class="btn btn-info mt-3">
             Take the quiz again?
           </button>
-        </div>
-        <div id="form">
-          <hr>
-          <form>
-            <p>Save your score!</p>
-            <input class="rounded text-center" type="text" name="user-initials" id="user-initials"
-              placeholder="Enter your initials" />
-            <br>
-            <button id="save-highscore-btn" type="button" class="btn btn-secondary mt-3">
-              Save
-            </button>
-          </form>
         </div>
       </div>
     </div>

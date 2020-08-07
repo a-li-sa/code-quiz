@@ -165,6 +165,15 @@ function startGame() {
   availableQuestions = [...questions];
   getNewQuestion();
 }
+//when the start button is clicked, hide the start containeer and start the timer
+startBtn.addEventListener('click', function() {
+  startContainer.setAttribute('hidden', true);
+  questionContainer.removeAttribute('hidden');
+  timer.removeAttribute('hidden');
+  countdown.textContent = 20;
+  setTimer();
+  startGame();
+});
 //renders a question and stops the quiz when there are no more questions
 function getNewQuestion() {
   if (availableQuestions.length === 0) {
@@ -179,8 +188,7 @@ function getNewQuestion() {
     currentQuestion = availableQuestions[questionIndex];
     question.innerText = currentQuestion.question;
     choices.forEach( choice => {
-      const number = choice.dataset['number'];
-      choice.innerText = currentQuestion['choice' + number];
+      choice.innerText = currentQuestion['choice' + choice.dataset['number']];
     })
     availableQuestions.splice(questionIndex, 1);
   }
@@ -210,13 +218,11 @@ choices.forEach(choice => {
     const selectedChoice = e.target;
     const selectedAnswer = selectedChoice.dataset["number"];
     if (selectedAnswer == currentQuestion.answer) {
-      console.log(selectedAnswer, currentQuestion.answer);
       selectedChoice.setAttribute("class", "btn btn-block choice-text btn-success");
       score++;
       // 5 + 1 to offset the timeout
       secondsLeft += 6;
     } else {
-      console.log(selectedAnswer, currentQuestion.answer);
       selectedChoice.setAttribute("class", "btn btn-block choice-text btn-danger");
       // 5 - 1 to offset the timeout
       secondsLeft -= 4;
@@ -270,15 +276,6 @@ saveHighscoreBtn.addEventListener('click', function(event) {
   storeHighscore(highscores);
   seeHighscoreBtn.click();
   form.setAttribute('hidden', true);
-});
-//when the start button is clicked, hide the start containeer and start the timer
-startBtn.addEventListener('click', function() {
-  startContainer.setAttribute('hidden', true);
-  questionContainer.removeAttribute('hidden');
-  timer.removeAttribute('hidden');
-  countdown.textContent = 20;
-  setTimer();
-  startGame();
 });
 //redirects the user to the start container and unhides the save highscore form
 takeAgainBtn.addEventListener('click', function() {
