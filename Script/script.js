@@ -289,3 +289,14 @@ takeAgainBtn.addEventListener('click', function() {
   }
   startContainer.removeAttribute('hidden');
 })
+//leave this code in to attempt to fix the bug where the results container unhides when it's not supposed to
+if (!startContainer.hasAttribute('hidden', true)) {
+  questionContainer.setAttribute('hidden', true);
+  resultsContainer.setAttribute('hidden', true);
+} else if (!questionContainer.hasAttribute('hidden', false)) {
+  startContainer.setAttribute('hidden', true);
+  resultsContainer.setAttribute('hidden', true);
+} else {
+  startContainer.setAttribute('hidden', true);
+  resultsContainer.setAttribute('hidden', true);
+}
