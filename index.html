@@ -13,11 +13,11 @@
   <title>Code Quiz</title>
 </head>
 
-<body class="bg-primary">
+<body class="bg-dark">
   <!-- container for header -->
   <header class="container mt-2">
     <div class="float-left">
-      <button id="see-highscore-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">
+      <button id="see-highscore-btn" type="button" class="btn btn-dark" data-toggle="modal" data-target="#Modal">
         View Your Previous Scores
       </button>
       <!-- Modal -->
@@ -34,7 +34,7 @@
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-secondary" id="clear-btn" onclick="this.blur();">Clear Scores</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal">Go Back</button>
+              <button type="button" class="btn btn-info" data-dismiss="modal">Go Back</button>
             </div>
           </div>
         </div>
@@ -48,11 +48,11 @@
 
   <!-- container for start -->
   <div class="container pt-5" id="start-container">
-    <div class="jumbotron alert-primary">
+    <div class="jumbotron alert-dark">
       <div class="text-center">
         <h1>Code Quiz</h1>
         <p>This quiz contains 15 questions and starts with 20 seconds on the timer.</p>
-        <button id="start-btn" type="button" class="btn btn-primary">Start</button>
+        <button id="start-btn" type="button" class="btn btn-info">Start</button>
       </div>
       <hr>
       <h3>Rules:</h3>
@@ -65,7 +65,7 @@
 
   <!-- container for questions -->
   <div class="container pt-5" id="question-container" hidden>
-    <div class="jumbotron alert-primary">
+    <div class="jumbotron alert-dark">
       <h2>
         <div id="question">Question</div>
       </h2>
@@ -80,14 +80,14 @@
 
   <!-- container for results -->
   <div class="container pt-5" id="results-container" hidden>
-    <div class="jumbotron alert-primary">
+    <div class="jumbotron alert-dark">
       <div class="text-center">
         <h1>Your Final Score:</h1>
         <div>
           <h1 id="show-score">0/5</h1>
         </div>
         <div id="take-again" class="mb-3">
-          <button id="take-again-btn" type="button" class="btn btn-primary mt-3">
+          <button id="take-again-btn" type="button" class="btn btn-info mt-3">
             Take the quiz again?
           </button>
         </div>
