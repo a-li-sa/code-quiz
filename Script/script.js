@@ -164,7 +164,6 @@ function startGame() {
   availableQuestions = [...questions];
   getNewQuestion();
 }
-/*********** QUESTION CONTAINER METHODS ***********/ 
 //timer terminates when the timer hits 0 or when user finishes all of the questions
 function setTimer() {
   let timerInterval = setInterval(function() {
@@ -176,6 +175,7 @@ function setTimer() {
     }
   }, 1000);
 }
+/*********** QUESTION CONTAINER METHODS ***********/ 
 //when a choice gets clicked
 choices.forEach(choice => {
   choice.addEventListener('click', e => {
@@ -246,15 +246,6 @@ function showResults(){
   resultsContainer.removeAttribute('hidden');
 }
 /*********** HIGHSCORE MODAL METHODS ***********/ 
-//call the function when the page is loaded
-renderHighscores();
-//when the clear button is clicked, the highscores array resets
-clearBtn.addEventListener('click', function () {
-  highscores.length = 0;
-  renderHighscores();
-  storeHighscore(highscores);
-  highscoreList.textContent = "";
-})
 //loads the savedHighscores from the localStorage and appends it to the modal
 function renderHighscores() {
   if (localStorage.getItem("highscores")) {
@@ -267,11 +258,19 @@ function renderHighscores() {
     }
   }
 }
+//call the function when the page is loaded
+renderHighscores();
 // this will be called whenever the user changes the localstorage
 function storeHighscore(array) {
   localStorage.setItem("highscores", JSON.stringify(array));
 }
-/*********** RESULTS CONTAINER METHODS ***********/ 
+//when the clear button is clicked, the highscores array resets
+clearBtn.addEventListener('click', function () {
+  highscores.length = 0;
+  storeHighscore(highscores);
+  renderHighscores();
+  highscoreList.textContent = "";
+})
 //when the save highscore btn is clicked, this adds a new item to the highscores array and appends the new item to the model 
 saveHighscoreBtn.addEventListener('click', function(event) {
   highscores.push(score + '/' + questions.length + ' - ' + userInitials.value);
@@ -292,4 +291,4 @@ takeAgainBtn.addEventListener('click', function() {
     form.removeAttribute('hidden');
   }
   startContainer.removeAttribute('hidden');
-})
+});
