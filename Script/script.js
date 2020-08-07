@@ -16,7 +16,7 @@ const takeAgain = document.getElementById('take-again');
 const takeAgainBtn = document.getElementById('take-again-btn');
 const questionNumber = document.getElementById('question-number');
 const clearBtn = document.getElementById('clear-btn');
-const userInitials = document.getElementById('user-initials');
+let userInitials = document.getElementById('user-initials');
 // declare variables
 let highscores = [];
 let currentQuestion = {};
@@ -147,23 +147,6 @@ let questions = [
     answer: 1
   }
 ]
-/*********** START CONTAINER METHODS ***********/ 
-//when the start button is clicked, hide the start containeer and start the timer
-startBtn.addEventListener('click', function() {
-  startContainer.setAttribute('hidden', true);
-  questionContainer.removeAttribute('hidden');
-  timer.removeAttribute('hidden');
-  countdown.textContent = 20;
-  setTimer();
-  startGame();
-});
-//when the game starts, the questionCounter and score reset, and the questions are reloaded
-function startGame() {
-  questionCounter = 0;
-  score = 0;
-  availableQuestions = [...questions];
-  getNewQuestion();
-}
 //timer terminates when the timer hits 0 or when user finishes all of the questions
 function setTimer() {
   let timerInterval = setInterval(function() {
@@ -175,31 +158,33 @@ function setTimer() {
     }
   }, 1000);
 }
-/*********** QUESTION CONTAINER METHODS ***********/ 
-//when a choice gets clicked
-choices.forEach(choice => {
-  choice.addEventListener('click', e => {
-    const selectedChoice = e.target;
-    const selectedAnswer = selectedChoice.dataset["number"];
-    if (selectedAnswer == currentQuestion.answer) {
-      //if it is the correct choice
-      selectedChoice.setAttribute("class", "btn btn-block choice-text btn-success");
-      score++;
-      // 5 + 1 to offset the timeout
-      secondsLeft += 6;
-    } else {
-      //if it is the wrong choice
-      selectedChoice.setAttribute("class", "btn btn-block choice-text btn-danger");
-      // 5 - 1 to offset the timeout
-      secondsLeft -= 4;
-    }
-    disableBtns();
-    setTimeout( () => {
-      resetBtns()
-      getNewQuestion();
-    }, 1000);
-  })
-})
+//when the game starts, the questionCounter and score reset, and the questions are reloaded
+function startGame() {
+  questionCounter = 0;
+  score = 0;
+  availableQuestions = [...questions];
+  getNewQuestion();
+}
+//renders a question and stops the quiz when there are no more questions
+function getNewQuestion() {
+  if (availableQuestions.length === 0) {
+    questionCounter++
+    //the user wil be directed to the results page when questions run out
+    showResults();
+  } else {
+    //a random question from the available questions array will be displayed, and questions will not repeat
+    questionCounter++;
+    questionNumber.innerHTML = "Question " + questionCounter + " out of " + questions.length;
+    const questionIndex = Math.floor(Math.random() * availableQuestions.length);
+    currentQuestion = availableQuestions[questionIndex];
+    question.innerText = currentQuestion.question;
+    choices.forEach( choice => {
+      const number = choice.dataset['number'];
+      choice.innerText = currentQuestion['choice' + number];
+    })
+    availableQuestions.splice(questionIndex, 1);
+  }
+}
 //disable the buttons for when the quiz shows the correct/wrong answer
 function disableBtns() {
   for (i = 0; i < choices.length; i++) {
@@ -219,25 +204,30 @@ function resetBtns() {
     choices[i].disabled = false;
   }
 }
-//renders a question and stops the quiz when there are no more questions
-function getNewQuestion() {
-  if (availableQuestions.length === 0) {
-    //the user wil be directed to the results page when questions run out
-    questionCounter++
-    showResults();
-  } else {
-    //a random question from the available questions array will be displayed, and questions will not repeat
-    questionCounter++;
-    questionNumber.innerHTML = "Question " + questionCounter + " out of " + questions.length;
-    const questionIndex = Math.floor(Math.random() * availableQuestions.length);
-    currentQuestion = availableQuestions[questionIndex];
-    question.innerText = currentQuestion.question;
-    choices.forEach( choice => {
-      choice.innerText = currentQuestion['choice' + choice.dataset['number']];
-    })
-    availableQuestions.splice(questionIndex, 1);
-  }
-}
+//when a choice gets clicked
+choices.forEach(choice => {
+  choice.addEventListener('click', e => {
+    const selectedChoice = e.target;
+    const selectedAnswer = selectedChoice.dataset["number"];
+    if (selectedAnswer == currentQuestion.answer) {
+      console.log(selectedAnswer, currentQuestion.answer);
+      selectedChoice.setAttribute("class", "btn btn-block choice-text btn-success");
+      score++;
+      // 5 + 1 to offset the timeout
+      secondsLeft += 6;
+    } else {
+      console.log(selectedAnswer, currentQuestion.answer);
+      selectedChoice.setAttribute("class", "btn btn-block choice-text btn-danger");
+      // 5 - 1 to offset the timeout
+      secondsLeft -= 4;
+    }
+    disableBtns();
+    setTimeout( () => {
+      resetBtns()
+      getNewQuestion();
+    }, 1000);
+  })
+})
 //this gets called when the quiz is over, it hides the questionContainer, unhides the resultsContainer and shows the final score
 function showResults(){
   questionContainer.setAttribute('hidden', true);
@@ -245,7 +235,6 @@ function showResults(){
   showScore.innerHTML = score + '/' + questions.length;
   resultsContainer.removeAttribute('hidden');
 }
-/*********** HIGHSCORE MODAL METHODS ***********/ 
 //loads the savedHighscores from the localStorage and appends it to the modal
 function renderHighscores() {
   if (localStorage.getItem("highscores")) {
@@ -280,8 +269,16 @@ saveHighscoreBtn.addEventListener('click', function(event) {
   userInitials.value = "";
   storeHighscore(highscores);
   seeHighscoreBtn.click();
-  //user can only use the save form once per quiz
   form.setAttribute('hidden', true);
+});
+//when the start button is clicked, hide the start containeer and start the timer
+startBtn.addEventListener('click', function() {
+  startContainer.setAttribute('hidden', true);
+  questionContainer.removeAttribute('hidden');
+  timer.removeAttribute('hidden');
+  countdown.textContent = 20;
+  setTimer();
+  startGame();
 });
 //redirects the user to the start container and unhides the save highscore form
 takeAgainBtn.addEventListener('click', function() {
@@ -291,4 +288,4 @@ takeAgainBtn.addEventListener('click', function() {
     form.removeAttribute('hidden');
   }
   startContainer.removeAttribute('hidden');
-});
+})
